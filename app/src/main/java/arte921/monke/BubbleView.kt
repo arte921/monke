@@ -25,6 +25,8 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
 
     var score = 0
 
+    lateinit var scoreVeranderdCallback: ((Int)->Unit)
+
     private val belPaint = Paint().apply {
         color = belKleur
         isAntiAlias = true
@@ -33,6 +35,18 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
         strokeWidth = 1f
+    }
+
+    fun nieuwSpel (hoeveelheidBubbels: Int) {
+        bellen = mutableListOf()
+
+        for (i in 1..hoeveelheidBubbels) {
+            voegBelToe()
+        }
+
+        score = 0
+
+        invalidate()
     }
 
     private fun voegBelToe () {
@@ -49,11 +63,7 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
         hoogte = h
         breedte = w
 
-        for (i in 1..4) {
-            voegBelToe()
-        }
-
-        score = 0
+        nieuwSpel(4)
 
         invalidate()
     }
@@ -65,6 +75,8 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
         for (bel in bellen) {
             canvas.drawCircle(bel.x, bel.y, bel.straal, belPaint)
         }
+
+        scoreVeranderdCallback(score)
     }
 
     override fun onTouchEvent(e: MotionEvent): Boolean {
