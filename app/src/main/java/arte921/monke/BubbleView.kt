@@ -47,7 +47,7 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
         hoogte = h
         breedte = w
 
-        for (i in 1..2) {
+        for (i in 1..4) {
             voegBelToe()
         }
 
