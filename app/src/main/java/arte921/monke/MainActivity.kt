@@ -14,8 +14,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         spelView = findViewById(R.id.bubbleView)
         val scoreView = findViewById<TextView>(R.id.scoreView)
+        val highScoreView = findViewById<TextView>(R.id.highscoreView)
 
-        spelView.scoreVeranderdCallback = { score -> scoreView.text = score.toString() }
+        spelView.scoreVeranderdCallback = { score, highscore -> run {
+                scoreView.text = "Score: " + score.toString()
+                highScoreView.text = "Highscore: " + highscore.toString()
+            }
+        }
     }
 
     fun hoeveelheidVeranderd (view: View) {

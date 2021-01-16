@@ -24,8 +24,9 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
     private var breedte = 0
 
     var score = 0
+    var highscore = 0
 
-    lateinit var scoreVeranderdCallback: ((Int)->Unit)
+    lateinit var scoreVeranderdCallback: ((Int, Int)->Unit)
 
     private val belPaint = Paint().apply {
         color = belKleur
@@ -45,6 +46,7 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
         }
 
         score = 0
+        highscore = 0
 
         invalidate()
     }
@@ -76,13 +78,14 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
             canvas.drawCircle(bel.x, bel.y, bel.straal, belPaint)
         }
 
-        scoreVeranderdCallback(score)
+        scoreVeranderdCallback(score, highscore)
     }
 
     override fun onTouchEvent(e: MotionEvent): Boolean {
         if (bellen[0].bevatCoordinaat(e.x, e.y)) {
             bellen.removeAt(0)
             score++
+            if (score > highscore) highscore = score
             voegBelToe()
         } else if (e.action == MotionEvent.ACTION_DOWN) {
             score = 0
