@@ -23,6 +23,8 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
     private var hoogte = 0
     private var breedte = 0
 
+    var score = 0
+
     private val belPaint = Paint().apply {
         color = belKleur
         isAntiAlias = true
@@ -51,6 +53,8 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
             voegBelToe()
         }
 
+        score = 0
+
         invalidate()
     }
 
@@ -66,7 +70,10 @@ class BubbleView (context: Context, attrs: AttributeSet): View(context, attrs) {
     override fun onTouchEvent(e: MotionEvent): Boolean {
         if (bellen[0].bevatCoordinaat(e.x, e.y)) {
             bellen.removeAt(0)
+            score++
             voegBelToe()
+        } else if (e.action == MotionEvent.ACTION_DOWN) {
+            score = 0
         }
 
         invalidate()
